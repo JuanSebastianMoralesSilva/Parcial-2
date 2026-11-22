@@ -1,9 +1,11 @@
+import java.util.ArrayList;
+
 public class Pokemon {
     private int id;
     public String name;
-    private String type;
+    private ArrayList<type> types;
     private int level;
-    private String trainer;
+    private Trainer trainer;
 
     public int getId() {
         return id;
@@ -13,12 +15,21 @@ public class Pokemon {
         this.id=id;
     }
 
-    public String getType(){
-        return type;
+    public ArrayList<type> getTypes() {
+        return types;
     }
 
-    public void setType(String type){
-        this.type=type;
+    public void setTypes(ArrayList<type> types) {
+        this.types = types;
+    }
+
+    public void addType(type newType) {
+        if (this.types == null) {
+            this.types = new ArrayList<>();
+        }
+        if (!this.types.contains(newType)) {
+            this.types.add(newType);
+        }
     }
 
     public int getLevel(){
@@ -29,31 +40,37 @@ public class Pokemon {
         this.level=level;
     }
 
-    public String getTrainer(){
+    public Trainer getTrainer(){
         return trainer;
     }
 
-    public void setTrainer(String trainer) {
+    public void setTrainer(Trainer trainer) {
         this.trainer = trainer;
     }
 
     public Pokemon() {}
 
-    public Pokemon(String nombre, int id, int nivel, String tipo, String entrenador) {
-        this.name = nombre;
+    public Pokemon(String name, int id, int level, Trainer trainer, type... types) {
+        this.name = name;
         this.setId(id);
-        this.level = nivel;
-        this.type = tipo;
-        this.trainer =entrenador;
+        this.setLevel(level);
+        this.setTrainer(trainer);
+        this.types = new ArrayList<>();
+        for (type t : types) {
+            this.addType(t);
+        }
     }
 
     @Override
     public String toString() {
-        return "Pokemon{nivel=" + level +
-                ", tipo=" + type +
+        String nametrainer = (trainer != null) ? trainer.name : "Salvaje / Sin entrenador";
+
+        return "Pokemon{" +
                 "name='" + name + '\'' +
-                ", id='" + id + '\'' +
-                "entrenador='" + trainer + '\'' +
-                super.toString() + "}";
+                ", id=" + id +
+                ", type='" + types + '\'' +
+                ", level=" + level +
+                ", entrenador='" + nametrainer + '\'' +
+                '}';
     }
 }
