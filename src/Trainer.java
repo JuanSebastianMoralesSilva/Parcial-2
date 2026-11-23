@@ -5,7 +5,7 @@ public class Trainer {
     public String name;
     private String id ;
     private ArrayList<Pokemon> pokemons;
-    private ArrayList<ArrayList<String>> medals;
+    private ArrayList<Medal> medals;
 
     public String getId() {
 
@@ -25,12 +25,12 @@ public class Trainer {
         this.pokemons = pokemons;
     }
 
-    public void addMedals(ArrayList<String> medal) {
-        this.medals.add(medal);
+    public ArrayList<Medal> getMedal() {
+        return medals;
     }
 
-    public ArrayList<ArrayList<String>> getMedals() {
-        return medals;
+    public void setMedal(ArrayList<Medal> medals) {
+        this.medals = medals;
     }
 
 public Trainer(String name, String id, ArrayList<Pokemon> pokemons){
