@@ -5,28 +5,11 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        String[] modos = {"Interfaz Gráfica (Swing)", "Menú por Consola"};
-        int seleccion = JOptionPane.showOptionDialog(
-                null,
-                "¿Cómo deseas ejecutar el programa Pokémon?",
-                "Seleccionar Modo de Ejecución",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                modos,
-                modos[0]
-        );
-
-        if (seleccion == 0) {
-            SwingUtilities.invokeLater(() -> {
-                Interfaz ventana = new Interfaz();
-                ventana.setVisible(true);
-            });
-        } else if (seleccion == 1) {
-            ejecutarConsola();
-        }
+        SwingUtilities.invokeLater(() -> {
+            Interfaz ventana = new Interfaz();
+            ventana.setVisible(true);
+        });
     }
-
     public static void ejecutarConsola() {
         Scanner lector = new Scanner(System.in);
 
