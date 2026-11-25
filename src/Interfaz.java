@@ -23,11 +23,9 @@ public class Interfaz extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
-        // 1. Cargar datos iniciales desde tus clases existentes
         pokedexG = Pokedex.cargarPrimeraGeneracion();
         listaTrainers = Main.trainersIniciales(pokedexG);
         trainerActual = listaTrainers.get(0);
-        // 2. Configurar modelos de listas y combos
         modeloListaEquipo = new DefaultListModel<>();
         equipoList.setModel(modeloListaEquipo);
         for (Medal m : Medal.values()) {
@@ -35,7 +33,6 @@ public class Interfaz extends JFrame {
         }
         actualizarComboTrainers();
         actualizarVistaTrainer();
-        // 3. Eventos de los botones y controles
         trainerComboBox.addActionListener(e -> {
             int idx = trainerComboBox.getSelectedIndex();
             if (idx >= 0 && idx < listaTrainers.size()) {
@@ -58,12 +55,10 @@ public class Interfaz extends JFrame {
         trainerComboBox.setSelectedIndex(listaTrainers.indexOf(trainerActual));
     }
     private void actualizarVistaTrainer() {
-        // Actualizar lista de equipo Pokémon
         modeloListaEquipo.clear();
         for (Pokemon p : trainerActual.getPokemons()) {
             modeloListaEquipo.addElement("#" + p.getId() + " - " + p.name + " | Nv. " + p.getLevel() + " | Tipos: " + p.getTypes());
         }
-        // Actualizar cuadro de medallas
         StringBuilder sb = new StringBuilder();
         if (trainerActual.getMedal().isEmpty()) {
             sb.append("Aún no tiene medallas.");
@@ -119,10 +114,17 @@ public class Interfaz extends JFrame {
                 int nivel = Integer.parseInt(nivelStr.trim());
                 type tipo1 = (type) JOptionPane.showInputDialog(this, "Selecciona el Tipo principal:",
                         "Tipo 1", JOptionPane.QUESTION_MESSAGE, null, type.values(), type.NORMAL);
+                type tipo2 = (type) JOptionPane.showInputDialog(this, "Selecciona el otro tipo:",
+                        "Tipo 2", JOptionPane.QUESTION_MESSAGE, null, type.values(), type.NORMAL);
+                actualizarVistaTrainer();
                 if (tipo1 == null) return;
-                Pokemon nuevoPoke = new Pokemon(nombre.trim(), id, nivel, trainerActual, tipo1);
+                Pokemon nuevoPoke = new Pokemon(nombre.trim(), id, nivel, trainerActual, tipo1, tipo2);
                 trainerActual.getPokemons().add(nuevoPoke);
                 actualizarVistaTrainer();
+                if (tipo2 == null) {
+                    nuevoPoke = nuevoPoke;
+                actualizarVistaTrainer();
+                }
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "ID y Nivel deben ser números enteros.");
             }
